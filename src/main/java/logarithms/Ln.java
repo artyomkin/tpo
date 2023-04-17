@@ -2,32 +2,28 @@ package logarithms;
 
 public class Ln {
 
-    private static Double INF = -1d;
-    private static Integer MAXITERATIONS = 100000;
+    public static double calc(double x, double eps) {
+        if (Double.isNaN(x) || x <= (double) 0) {
+            throw new IllegalArgumentException("X must not be 0 or NaN.");
+        } else if (x == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
+        } else if (x == 0.0) {
+            return Double.NEGATIVE_INFINITY;
+        }
 
-    public static Double calc(Double num, Double accuracy) throws IllegalArgumentException{
-        if (num == null || num <= 0){
-            throw new IllegalArgumentException("Logarithm argument must be bigger than 0.");
-        }
-        if (accuracy == null || accuracy >= 1 || accuracy <= 0){
-            throw new IllegalArgumentException("Logarithm accuracy must be bigger than 0 and less than 1.");
-        }
-        Double x = num - 1;
-        Double n = 0d;
-        Double prevSum = INF;
-        Double sum = 0d;
-        while (Math.abs(sum - prevSum) > accuracy && n < MAXITERATIONS){
+        double constant = ((x - 1) * (x - 1)) / ((x + 1) * (x + 1));
 
-            Double numerator = Math.pow(-1, n) * Math.pow(x, n+1);
-            Double denominator = n + 1;
-            sum += numerator / denominator;
-            n++;
-
+        double sum = 0;
+        double currentValue = (x - 1) / (x + 1);
+        int step = 1;
+        while (Math.abs(currentValue) > eps / 2) {
+            sum += currentValue;
+            currentValue = (2 * step - 1) * currentValue * constant / (2 * step + 1);
+            step++;
         }
-        if (n > MAXITERATIONS && Math.abs(sum - prevSum) > accuracy){
-            throw new IllegalArgumentException("Desired accuracy " + accuracy + " is unreachable.");
-        }
+        sum *= 2;
         return sum;
     }
+
 
 }
