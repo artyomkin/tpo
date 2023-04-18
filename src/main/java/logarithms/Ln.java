@@ -2,13 +2,13 @@ package logarithms;
 
 public class Ln {
 
-    public static double calc(double x, double eps) {
+    public double calc(double x, double eps) {
         if (Double.isNaN(x) || x <= (double) 0) {
-            throw new IllegalArgumentException("X must not be 0 or NaN.");
+            throw new IllegalArgumentException("X must not be 0 or 1 or NaN.");
         } else if (x == Double.POSITIVE_INFINITY) {
             return Double.POSITIVE_INFINITY;
-        } else if (x == 0.0) {
-            return Double.NEGATIVE_INFINITY;
+        } else if (Double.isNaN(eps) || eps <= 0.0 || eps >= 1) {
+            throw new IllegalArgumentException("Accuracy must be more than 0 and less than 1.");
         }
 
         double constant = ((x - 1) * (x - 1)) / ((x + 1) * (x + 1));
