@@ -68,22 +68,6 @@ public class SystemTest {
         // Assert the result
 //        assertEquals(expectedResult, result);
 
-        // Write result of test to CSV
-        writeResultToCsv("testCalcWithPositiveX", x, accuracy, expectedMockInteractions, expectedResult, result);
     }
 
-    // Helper method to write test results to CSV
-    private void writeResultToCsv(String testCaseName, Double x, Double accuracy, String[] expectedMockInteractions,
-                                  Double expectedResult, Double actualResult) throws IOException {
-        FileWriter writer = new FileWriter("test_results.csv", true);
-        StringBuilder sb = new StringBuilder();
-        sb.append(testCaseName).append(",");
-        sb.append(x).append(",");
-        sb.append(accuracy).append(",");
-        sb.append(String.join(";", expectedMockInteractions)).append(",");
-        sb.append(expectedResult).append(",");
-        sb.append(actualResult).append("\n");
-        writer.write(sb.toString());
-        writer.close();
-    }
 }
